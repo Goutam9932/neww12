@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Group</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+        .container h2 {
+            margin-top: 0;
+            font-size: 24px;
+            color: #333;
+        }
+        .container form {
+            display: flex;
+            flex-direction: column;
+        }
+        .container form label {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #666;
+        }
+        .container form input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .container form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .container form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Add New Group</h2>
+        <form id="addGroupForm" action="/api/v1/newGroup" method="post">
+            <label for="groupName">Group Name:</label>
+            <input type="text" id="groupName" name="groupName" required>
+            <button type="submit">Add Group</button>
+        </form>
+    </div>
+
+    <!-- Add the JavaScript code to dynamically update the dropdown list -->
+    <script>
+        function serializeFormToJson(form) {
+            var formData = new FormData(form);
+            var jsonObject = {};
+            formData.forEach(function(value, key) {
+                jsonObject[key] = value;
+            });
+            return JSON.stringify(jsonObject);
+        }
+
+        document.getElementById("addGroupForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            var form = event.target;
+            var jsonData = serializeFormToJson(form);
+
+            fetch("/api/v1/newGroup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: jsonData
+            }).then(response => {
+                if (response.ok) {
+                    // If group added successfully, update the dropdown list
+                    updateGroupDropdown();
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        function updateGroupDropdown() {
+            fetch("/api/v1/group")
+                .then(response => response.json())
+                .then(groups => {
+                    var dropdown = document.getElementById("group");
+                    dropdown.innerHTML = ""; // Clear existing options
+                    groups.forEach(group => {
+                        var option = document.createElement("option");
+                        option.value = group.id;
+                        option.text = group.name;
+                        dropdown.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Call the function to populate the dropdown initially
+        updateGroupDropdown();
+    </script>
+</body>
+</html>
