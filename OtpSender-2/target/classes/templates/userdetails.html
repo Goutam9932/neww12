@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 20px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+        table {
+            margin-top: 20px;
+        }
+        .user-image {
+            width: 75px;
+            height: 75px;
+            border-radius: 55%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+   <div class="container">
+    <h1>All Users</h1>
+
+    <!-- Search Form -->
+    <form action="#" th:action="@{/search}" method="get" class="form-inline mb-4">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="searchName" class="sr-only">Search by Name</label>
+            <input type="text" class="form-control" id="searchName" name="name" placeholder="Search by name" required>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Search</button>
+    </form>
+
+    <!-- User Table -->
+    <table class="table table-bordered table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+           <tr th:each="user : ${users}">
+                <td th:text="${user.id}"></td>
+                <td>
+                    <img th:src="'data:image/jpeg;base64,' + ${user.imageBase64}" class="user-image" />
+                </td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.role}"></td>
+               <td>
+                   <a th:href="@{/admin/edit(id=${user.id})}" class="btn btn-warning">Edit</a>
+                   <form th:action="@{/user/delete/{id}(id=${user.id})}" method="post" style="display:inline;">
+                       <button type="submit" class="btn btn-danger">Delete</button>
+                   </form>
+               </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/admin/dashboard" class="btn btn-danger btn-block btn-back">Back to Admin Dashboard</a>
+    
+</div>
+<nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                <a class="page-link" th:href="@{/userdetails(page=${currentPage - 1})}">Previous</a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'">
+                <a class="page-link" th:href="@{/userdetails(page=${i})}" th:text="${i + 1}"></a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
+                <a class="page-link" th:href="@{/userdetails(page=${currentPage + 1})}">Next</a>
+            </li>
+        </ul>
+    </nav>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

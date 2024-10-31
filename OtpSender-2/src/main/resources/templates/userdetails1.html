@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Resetting some default browser styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+       .container {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+        h1 {
+            color: #4A4A4A;
+            font-weight: 600;
+            font-size: 2em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        p.subtitle {
+            font-size: 1em;
+            color: #888;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .button-group a, .button-group form {
+            flex: 1 1 40%;
+            text-decoration: none;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #0061f2;
+            color: #fff;
+            padding: 12px 24px;
+            font-size: 1em;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .button:hover {
+            background-color: #0048b3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 97, 242, 0.2);
+        }
+
+        .logout-button {
+            background-color: #e53935;
+        }
+
+        .logout-button:hover {
+            background-color: #c62828;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(229, 57, 53, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+         <h1>User Dashboard</h1>
+
+         <a href="/user/dashboard1">
+    <button type="button" class="button">User Details</button>
+</a>
+
+
+
+
+          
+
+           
+        </div>
+    </div>
+</body>
+</html>

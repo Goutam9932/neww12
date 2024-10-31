@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(135deg, #0052cc, #3385ff);
+    }
+
+    .container {
+        background-color: white;
+        max-width: 900px;
+        width: 100%;
+        display: flex;
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        position: relative;
+    }
+
+    /* Circular elements */
+    .container::before, .container::after {
+        content: '';
+        position: absolute;
+        background-color: #0052cc;
+        border-radius: 50%;
+        z-index: 1;
+    }
+
+    /* Left-hand large circle */
+    .container::before {
+        width: 450px; /* Increased size */
+        height: 450px;
+        top: -150px; /* Adjusted positioning */
+        left: -150px; /* Adjusted positioning */
+        background: radial-gradient(circle at 50% 50%, #3385ff, #0052cc);
+    }
+
+    /* Right-hand smaller circle */
+    .container::after {
+        width: 200px;
+        height: 200px;
+        bottom: -100px;
+        right: -100px;
+        background: radial-gradient(circle at 50% 50%, #3385ff, #0052cc);
+    }
+
+    .left-section {
+       
+        padding: 60px 40px;
+        color: white;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative;
+        z-index: 2; /* Ensure left-section content is above the circles */
+    }
+
+    .left-section h1 {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    .left-section p {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .right-section {
+        flex: 1;
+        padding: 90px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+    }
+
+    .sign-in-box {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .sign-in-box h2 {
+        color: #003366;
+        font-size: 28px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .input-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .input-group label {
+        display: block;
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 8px;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 14px;
+        padding-left: 40px; /* Space for the icon */
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    .input-group .fa {
+        position: absolute;
+        top: 65%;
+        left: 10px;
+        transform: translateY(-50%);
+        color: #0052cc;
+        font-size: 16px;
+    }
+
+    .show-password {
+        display: inline-block;
+        margin-top: -34px;
+        margin-left: 250px;
+        cursor: pointer;
+        color: #0052cc;
+        font-size: 12px;
+        position: absolute;
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 14px;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    /* Styling for the secondary options */
+    .secondary-options {
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .secondary-options a {
+        color: #0056b3;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .secondary-options a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="left-section">
+            <h1>Welcome</h1>
+           
+        </div>
+        <div class="right-section">
+            <div class="sign-in-box">
+                <h2>Sign In</h2>
+                
+                <!-- Error message container -->
+                <div id="error-message" class="error-message" style="display: none;"></div>
+                
+                <form action="/login" method="post">
+                    <div class="input-group">
+                        <label for="username">User Name</label>
+                        <i class="fa fa-user"></i>
+                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <i class="fa fa-lock"></i>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <span class="show-password">SHOW</span>
+                    </div>
+                    <button type="submit" class="sign-in-btn">Sign in</button>
+                </form>
+               
+            </div>
+        </div>
+    </div>
+ <!-- OTP Section (Hidden initially, can be shown via JavaScript) -->
+        <div id="otp-section" style="display: none;">
+            <p>An OTP has been sent to your registered email.</p>
+            <form th:action="@{/verifyOtp}" method="post">
+                <div>
+                    <label for="otp">Enter OTP</label>
+                    <input type="text" id="otp" name="otp" required>
+                </div>
+                <div>
+                    <button type="submit">Verify OTP</button>
+                </div>
+                <div id="otp-error-message" class="error-message" style="display: none;">
+                    Invalid OTP
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Get URL parameters and the error message div
+        const urlParams = new URLSearchParams(window.location.search);
+        const errorParam = urlParams.get('error');
+        const errorMessageDiv = document.getElementById('error-message');
+
+        // Check if errorParam exists and update the error-message div
+        if (errorMessageDiv) {
+            if (errorParam === 'loginLimitExceeded') {
+                errorMessageDiv.innerHTML = '<span>Login limit exceeded. You cannot log in more than 3 times.</span>';
+                errorMessageDiv.style.display = 'block'; // Show the error div
+            } else if (errorParam === 'true') {
+                errorMessageDiv.innerHTML = '<span>Invalid email or password</span>';
+                errorMessageDiv.style.display = 'block'; // Show the error div
+            }
+        }
+
+        // Toggle show/hide password
+        const passwordField = document.getElementById('password');
+        const togglePassword = document.querySelector('.show-password');
+        togglePassword.addEventListener('click', function () {
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            this.textContent = this.textContent === 'SHOW' ? 'HIDE' : 'SHOW';
+        });
+
+    </script>
+
+</body>
+</html>

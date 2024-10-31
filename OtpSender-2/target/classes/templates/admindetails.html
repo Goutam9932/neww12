@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Users</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+
+        table {
+            margin-top: 30px;
+        }
+
+        .user-image {
+            width: 75px;
+            height: 75px;
+            border-radius: 55%;
+            object-fit: cover;
+        }
+
+        .btn-back {
+            margin-top: 20px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Users</h1>
+        
+        <table class="table table-bordered table-striped">
+            <thead class="thead-light">
+                <tr>
+                    
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="admin : ${admins}">
+                <td th:text="${admin.id}"></td>
+                    <td>
+                        <img th:src="'data:image/jpeg;base64,' + ${admin.imageBase64}" class="user-image" alt="Admin Image">
+                    </td>
+                    
+                    <td th:text="${admin.email}"></td>
+                    <td th:text="${admin.name}"></td>
+                    <td th:text="${admin.role}"></td>
+                    <td>
+                        <a th:href="@{/admin/edit(id=${admin.id})}" class="btn btn-warning btn-sm">Edit</a>
+                        <a th:action="@{/user/delete/{id}(id=${admin.id})}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                       
+                    </td>
+                </tr>
+            </tbody>
+            </form>
+        </table>
+
+        <a href="/admin/dashboard" class="btn btn-danger btn-block btn-back">Back to Admin Dashboard</a>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Admin</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Base Styling */
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+.user-image {
+    max-width: 20%;
+    height: auto;
+    border-radius: 4px;
+    display: block;
+    margin-top: 10px;
+}
+
+        .container {
+            max-width: 600px;
+            margin-top: 60px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #555555;
+        }
+
+        .form-control {
+            border: 1px solid #dddddd;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Button Styling */
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .mt-3 {
+            margin-top: 1.5rem !important;
+        }
+
+        /* Footer Link Styling */
+        .back-link {
+            text-align: center;
+            display: block;
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        .back-link:hover {
+            color: #007bff;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Admin Details</h1>
+
+       <form th:action="@{/admin/update}" th:object="${admin}" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}" />
+
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter admin name" required />
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Enter admin email" required />
+    </div>
+<div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Enter new password (leave blank to keep current)" />
+</div>
+<div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" class="form-control" id="username" th:field="*{username}" placeholder="Enter username" required />
+</div>
+    <div class="form-group">
+        <label for="role">Role</label>
+        <select class="form-control" id="role" th:field="*{role}">
+            <option value="USER" th:selected="${admin.role == 'USER'}">User</option>
+            <option value="ADMIN" th:selected="${admin.role == 'ADMIN'}">Admin</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="imageFile">Upload New Image</label>
+        <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*" />
+        <img th:src="'data:image/jpeg;base64,' + ${admin.imageBase64}" alt="Admin Image" class="user-image mt-2" />
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block mt-4">Save Changes</button>
+</form>
+
+
+        <!-- Back to Admin Details link -->
+        <a href="/userdetails" class="back-link mt-3">Back to Admin Details</a>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
