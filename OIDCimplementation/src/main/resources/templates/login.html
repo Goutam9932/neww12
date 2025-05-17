@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignClient - Secure Authentication</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/CSS/bootstrap-min.css}">
+    
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .auth-card {
+            width: 100%;
+           height: 500px;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+.btn-auth {
+    text-decoration: none !important; /* Removes underline */
+}
+
+    .auth-card img {
+    max-width: 210px;
+    margin-bottom: 20px;
+    border-radius: 90px;
+    /* border: 3px solid #ddd; */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+
+.auth-card img:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3); /* Increased shadow on hover */
+}
+
+        .auth-card h4 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #222;
+            margin-bottom: 15px;
+        }
+
+        .auth-card p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 12px;
+            border-radius: 50px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .btn-gluu {
+            background-color: #28a745;
+            color: white;
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-gluu:hover {
+            background-color: #218838;
+        }
+
+        .btn-wso2 {
+            background-color: #ff6600;
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
+        }
+
+        .btn-wso2:hover {
+            background-color: #e65c00;
+        }
+
+        footer {
+            background: #246416;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+
+        footer a {
+            color: #ffdd57;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 767px) {
+            .auth-card {
+                padding: 30px;
+            }
+        }
+    </style>
+    
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}" />
+</head>
+<body>
+
+    <div class="container">
+        <div class="auth-card">
+            <img th:src="@{/SSO.jpg}" alt="SignClient Logo">
+            <h4>Welcome to GluuAuthDB</h4>
+            <p>Experience secure authentication and seamless access to resources from any OIDC Identity Provider (IDP). Explore our features and benefits:</p>
+            
+            <!-- Login with Gluu -->
+            <a th:href="@{/oauth2/authorization/gluu}" class="btn btn-auth btn-gluu">Login with gluu</a>
+
+            <!-- Login with WSO2 -->
+            <a th:href="@{/oauth2/authorization/wso2}" class="btn btn-auth btn-wso2">Login with WSO2</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Centroxy. All Rights Reserved.</p>
+        <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Contact Us</a>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: wso2  # Activating WSO2 profile
+
+  ssl:
+    key-store: classpath:static/certs/crunchify.keystore
+    key-store-password: Centroxy@123
+    key-store-type: PKCS12  # Change to JKS if needed
+    key-alias: crunchify  # Keystore alias
+
+    
