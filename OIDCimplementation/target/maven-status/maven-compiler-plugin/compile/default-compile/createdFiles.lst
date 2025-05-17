@@ -1,0 +1,5 @@
+com\example\demo\config\SecurityConfig.class
+com\example\demo\repo\UserDetailsRepository.class
+com\example\demo\OidCimplementationApplication.class
+com\example\demo\model\UserDetails.class
+com\example\demo\controller\UserDetailsController.class

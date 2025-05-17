@@ -1,0 +1,28 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          wso2:
+            client-id: E2S3lfeLRjh7R5bxezFl5ikDz4Ma
+            client-secret: zxo02dhIvYA9zEfMRuVsSKNrK2CZnbYrqK7vniy87VMa
+            scope: openid,email,profile,usertype
+            authorization-grant-type: authorization_code
+            redirect-uri: https://localhost:8443/login/oauth2/code/wso2
+
+        provider:
+          wso2:
+            issuer-uri: https://wso2.cnxy.in/oauth2/token
+            authorization-uri: https://wso2.cnxy.in/oauth2/authorize
+            token-uri: https://wso2.cnxy.in/oauth2/token
+            jwk-set-uri: https://wso2.cnxy.in/oauth2/jwks
+            user-info-uri: https://wso2.cnxy.in/oauth2/userinfo
+            user-name-attribute: sub
+
+  
+client:
+  logouturi:
+    gluu: https://sso.cnxy.in/oxauth/restv1/end_session
+    wso2: https://wso2.cnxy.in/oidc/logout
+  post-logout-redirect-uri: https://localhost:8443/login1
+  
