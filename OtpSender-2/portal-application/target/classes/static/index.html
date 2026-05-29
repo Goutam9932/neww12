@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Centralized Portal</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="glass" style="border-radius: 0; border-top: none; border-left: none; border-right: none;">
+        <div class="header-left">
+            <div class="logo-icon" style="width: 40px; height: 40px; border-radius: 9px; margin-bottom: 0; box-shadow: 0 4px 10px var(--primary-glow);">
+                <svg viewBox="0 0 24 24" style="width: 22px; height: 22px;">
+                    <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                    <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                    <rect x="14" y="14" width="7" height="7" rx="1.5" />
+                    <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                </svg>
+            </div>
+            <span class="logo-title" style="font-size: 18px; font-weight: 700;">Portal Hub</span>
+        </div>
+
+        <div class="header-right">
+            <!-- User Profile Dropdown Menu -->
+            <div class="user-profile-menu" id="profileMenu">
+                <div class="profile-trigger" id="profileTrigger" onclick="toggleProfileDropdown(event)">
+                    <div class="avatar" id="headerAvatar">?</div>
+                    <span class="username" id="headerUsername">Loading...</span>
+                    <!-- Chevron Down SVG -->
+                    <svg class="chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                
+                <div class="profile-dropdown glass" id="profileDropdown">
+                    <div class="dropdown-header">
+                        <div class="dropdown-name" id="dropdownFullName">Loading User...</div>
+                        <div class="dropdown-email" id="dropdownEmail"></div>
+                    </div>
+                    <a href="#" class="dropdown-item" onclick="openProfileModal(event)">
+                        <!-- User Icon -->
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span>My Profile</span>
+                    </a>
+					<button type="button"
+					        class="dropdown-item logout-btn"
+					        onclick="triggerLogout()">
+
+					    <!-- Icon -->
+					    <svg width="16" height="16" fill="none" stroke="currentColor"
+					         stroke-width="2" viewBox="0 0 24 24">
+					        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+					        <polyline points="16 17 21 12 16 7"></polyline>
+					        <line x1="21" y1="12" x2="9" y2="12"></line>
+					    </svg>
+
+					    <span>Sign Out</span>
+					</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard Container -->
+    <main>
+        <!-- Welcome Jumbotron Panel -->
+        <div class="welcome-panel glass">
+            <div class="welcome-panel-content">
+                <h2 class="welcome-title" id="welcomeGreeting">Welcome back!</h2>
+                <p class="welcome-subtitle" id="welcomeDate">Fetching dashboard summary details...</p>
+            </div>
+            <div class="welcome-accent"></div>
+        </div>
+
+        <!-- Controls Filter & Search Panel -->
+        <div class="controls-panel">
+            <div class="search-container">
+                <!-- Search Icon -->
+                <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input class="search-input" type="text" id="tileSearch" placeholder="Search application tiles..." oninput="handleSearch(this.value)">
+            </div>
+            <div class="filter-group" id="filterChipsContainer">
+                <button class="filter-chip active" onclick="filterCategory('All', this)">All Portals</button>
+            </div>
+        </div>
+
+        <!-- Tiles Dynamic Layout Container -->
+        <div class="tiles-grid" id="tilesContainer">
+            <!-- Loading indicator -->
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-secondary);">
+                <span>Loading your authorized applications...</span>
+            </div>
+        </div>
+
+      
+
+        <!-- Admin Users Table Panel (Only rendered for ROLE_ADMIN) -->
+        <div class="admin-section glass" id="adminUsersSection" style="padding: 30px; margin-top: 30px;">
+            <div class="section-header">
+                <!-- User Group SVG Icon -->
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: var(--primary);">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M16 3.13a4 4 0 0 1 0 7.75M23 21v-2a4 4 0 0 0-3-3.87M9 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"></path>
+                </svg>
+                <h3 class="section-title" style="margin-left: 10px;">System Registered Users Ledger</h3>
+            </div>
+            <p class="welcome-subtitle" style="margin-bottom: 25px;">Manage and monitor registered portal users, their departments, and assigned security roles.</p>
+            
+            <div class="table-container">
+                <table id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Full Name</th>
+                            <th>Username</th>
+                            <th>Email Address</th>
+                            <th>Department</th>
+                            <th>Assigned Roles</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr>
+                            <td colspan="6" class="empty-state">
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width: 32px; height: 32px; margin-bottom: 10px; color: var(--text-muted);">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                </svg>
+                                <div>No registered users found.</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="global-footer">
+        <p>&copy; 2026 Enterprise Centralized Application Portal. All rights reserved.</p>
+    </footer>
+
+    <!-- User Profile Modal -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal-content glass">
+            <button class="modal-close" onclick="closeProfileModal()">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <h3 class="section-title" style="margin-bottom: 5px;">User Profile</h3>
+            <p class="welcome-subtitle">Your organizational security details</p>
+            
+            <div class="profile-details-grid">
+                <div class="profile-field">
+                    <span class="profile-field-label">Full Name</span>
+                    <span class="profile-field-val" id="profileFullName">John Doe</span>
+                </div>
+                <div class="profile-field">
+                    <span class="profile-field-label">Username</span>
+                    <span class="profile-field-val" id="profileUsername">user</span>
+                </div>
+                <div class="profile-field">
+                    <span class="profile-field-label">Email Address</span>
+                    <span class="profile-field-val" id="profileEmail"></span>
+                </div>
+                <div class="profile-field">
+                    <span class="profile-field-label">Department</span>
+                    <span class="profile-field-val" id="profileDepartment">Finance</span>
+                </div>
+                <div class="profile-field">
+                    <span class="profile-field-label">Assigned Roles</span>
+                    <div class="role-tag-container" id="profileRolesTags">
+                        <!-- Loaded via JS -->
+                        <span class="role-tag role-user">ROLE_USER</span>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" onclick="closeProfileModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Session Timeout Warn Modal -->
+    <div class="modal-overlay" id="timeoutModal">
+        <div class="modal-content glass timeout-modal-content">
+            <div class="timeout-icon">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+            </div>
+            <h3 class="timeout-title">Session Expiring</h3>
+            <p class="timeout-desc">Your session has been idle. For security, you will be automatically logged out in:</p>
+            
+            <div class="countdown-number" id="timeoutCountdown">60</div>
+            
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="timeoutProgressBar"></div>
+            </div>
+            
+            <div class="timeout-actions">
+                <button class="btn btn-secondary" onclick="triggerLogout(null)">Logout</button>
+                <button class="btn btn-primary" onclick="extendSession()">Stay Logged In</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Javascript Actions Code -->
+    <script src="js/app.js"></script>
+</body>
+</html>
